@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using ProyectoNetshop.Cruds;
+using ProyectoNetshop.BD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -101,13 +104,10 @@ namespace vistaDeProyectoC
             fechaNacimiento.Checked = false;
             fechaNacimiento.Value = DateTime.Today;
 
-            dgvClientes.Rows.Clear();
-
             // Agregamos una fila de ejemplo:
-            dgvClientes.Rows.Add("1", "Juan", "Pérez", "12345678", "5550123456", "juan.perez@correo.com", "Masculino", DateTime.Today.AddYears(-30).ToShortDateString(), "1");
-            dgvClientes.Rows.Add("2", "Maria", "Pérez", "12244678", "1110123456", "maria.perez@correo.com", "Femenino", DateTime.Today.AddYears(-30).ToShortDateString(), "1");
-            dgvClientes.Rows.Add("3", "Ramon", "Pérez", "22344677", "2155012344", "ramon.perez@correo.com", "Otros", DateTime.Today.AddYears(-30).ToShortDateString(), "1");
+            dgvClientes.DataSource = ObtenerClientes();
         }
+
         private void InputFields_Changed(object sender, EventArgs e)
         {
             validarCampos();
@@ -115,12 +115,12 @@ namespace vistaDeProyectoC
 
         private void validarCampos()
         {
-            btnGuardar.Enabled = 
+            btnGuardar.Enabled =
                 !string.IsNullOrWhiteSpace(tbNombre.Text) &&
                 !string.IsNullOrWhiteSpace(tbApellido.Text) &&
-                ValidarDNI() && 
+                ValidarDNI() &&
                 ValidarEmail() &&
-                ValidarTelefono() && 
+                ValidarTelefono() &&
                 (rbMasculino.Checked || rbFemenino.Checked || rbOtros.Checked) &&
                 ValidarFechaNacimiento();
         }
@@ -170,7 +170,7 @@ namespace vistaDeProyectoC
 
         private void tbApellido_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void tbDNI_TextChanged(object sender, EventArgs e)
@@ -210,10 +210,89 @@ namespace vistaDeProyectoC
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Cliente registrado con éxito.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var cliente = new Cliente_model
+            {
+                nombre = tbNombre.Text,
+                apellido = tbApellido.Text,
+                email = tbEmail.Text,
+                sexo = rbMasculino.Checked ? "Masculino" : rbFemenino.Checked ? "Femenino" : "Otros",
+                fecha_nacimiento = fechaNacimiento.Checked ? fechaNacimiento.Value.Date : (DateTime?)null,
+                telefono = string.IsNullOrWhiteSpace(tbTelefono.Text) ? null : long.Parse(tbTelefono.Text),
+                dni = int.Parse(tbDNI.Text)
+            };
+
+            int resultado = Cliente_controller.agregarCliente(cliente);
+            if (resultado > 0)
+                MessageBox.Show("Cliente registrado con éxito.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("Error al registrar el cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            FiltrarYRefrescar();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            vaciarCampos();
+            FiltrarYRefrescar();
+        }
+
+        private void FiltrarYRefrescar()
+        {
+            var clientes = ObtenerClientes();
+
+            // Se aplica un filtro por activo/inactivo
+            var filtrados = clientes.Where(u => (cbActivos.Checked && u.activo == 1) || (cbInactivos.Checked && u.activo == 0)).ToList();
+
+            // Si hay texto en el DNI, filtrar por prefijo
+            var textoDni = tbBusquedaDniCliente.Text.Trim();
+            if (textoDni.Length > 0 && textoDni.All(char.IsDigit))
+            {
+                filtrados = filtrados.Where(u => u.dni.ToString().StartsWith(textoDni)).ToList();
+            }
+
+            // Si hay texto en el Nombre, filtrar por contenido
+            var textoNom = tbBusquedaNombreCliente.Text.Trim();
+            if (textoNom.Length > 0)
+            {
+                filtrados = filtrados.Where(u => u.nombre.IndexOf(textoNom, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            // Se refresca el DataGridView con la lista filtrada
+            dgvClientes.DataSource = null;
+            dgvClientes.DataSource = filtrados;
+        }
+
+        private List<Cliente_model> ObtenerClientes()
+        {
+            var lista = new List<Cliente_model>();
+            using var con = ProyectoNetshop.BD.BaseDeDatos.obtenerConexion();
+            using var cmd = con.CreateCommand();
+            cmd.CommandText = @"SELECT id_cliente, nombre, apellido, email, activo, sexo, fecha_nacimiento, telefono, dni FROM cliente";
+            using var rd = cmd.ExecuteReader();
+            while (rd.Read())
+            {
+                DateTime? fn = rd.IsDBNull(6) ? (DateTime?)null : rd.GetDateTime(6);
+                long? tel = rd.IsDBNull(7) ? (long?)null : rd.GetInt32(7);
+
+                var cliente = new Cliente_model
+                {
+                    id_cliente = rd.GetInt32(0),
+                    nombre = rd.GetString(1),
+                    apellido = rd.GetString(2),
+                    email = rd.GetString(3),
+                    activo = rd.GetInt32(4),
+                    sexo = rd.GetString(5),
+                    fecha_nacimiento = fn,
+                    telefono = tel,
+                    dni = rd.GetInt32(8),
+                };
+
+                lista.Add(cliente);
+            }
+
+            return lista;
+        }
+
+        private void vaciarCampos()
         {
             tbNombre.Text = "";
             tbApellido.Text = "";
@@ -261,6 +340,16 @@ namespace vistaDeProyectoC
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void cbActivos_CheckedChanged(object sender, EventArgs e)
+        {
+            FiltrarYRefrescar();
+        }
+
+        private void cbInactivos_CheckedChanged(object sender, EventArgs e)
+        {
+            FiltrarYRefrescar();
         }
     }
 }

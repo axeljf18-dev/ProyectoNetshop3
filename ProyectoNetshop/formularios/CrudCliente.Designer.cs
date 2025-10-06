@@ -60,15 +60,6 @@
             cbInactivos = new CheckBox();
             cbActivos = new CheckBox();
             dgvClientes = new DataGridView();
-            idCliente = new DataGridViewTextBoxColumn();
-            nombreCliente = new DataGridViewTextBoxColumn();
-            apellidoCliente = new DataGridViewTextBoxColumn();
-            dniCliente = new DataGridViewTextBoxColumn();
-            telefonoCliente = new DataGridViewTextBoxColumn();
-            emailCliente = new DataGridViewTextBoxColumn();
-            sexoCliente = new DataGridViewTextBoxColumn();
-            fechaNacimientoCliente = new DataGridViewTextBoxColumn();
-            activoCliente = new DataGridViewTextBoxColumn();
             panel1.SuspendLayout();
             gbActivoCliente.SuspendLayout();
             gbSexo.SuspendLayout();
@@ -99,10 +90,9 @@
             panel1.Controls.Add(tbNombre);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
             panel1.RightToLeft = RightToLeft.No;
-            panel1.Size = new Size(1159, 292);
+            panel1.Size = new Size(1014, 219);
             panel1.TabIndex = 19;
             panel1.Paint += panel1_Paint;
             // 
@@ -113,11 +103,9 @@
             gbActivoCliente.Controls.Add(rbActivoClienteNo);
             gbActivoCliente.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             gbActivoCliente.ForeColor = SystemColors.ButtonFace;
-            gbActivoCliente.Location = new Point(744, 189);
-            gbActivoCliente.Margin = new Padding(3, 4, 3, 4);
+            gbActivoCliente.Location = new Point(651, 142);
             gbActivoCliente.Name = "gbActivoCliente";
-            gbActivoCliente.Padding = new Padding(3, 4, 3, 4);
-            gbActivoCliente.Size = new Size(229, 59);
+            gbActivoCliente.Size = new Size(200, 44);
             gbActivoCliente.TabIndex = 27;
             gbActivoCliente.TabStop = false;
             gbActivoCliente.Text = "Activo";
@@ -129,10 +117,9 @@
             rbActivoClienteSi.Checked = true;
             rbActivoClienteSi.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             rbActivoClienteSi.ForeColor = SystemColors.ButtonFace;
-            rbActivoClienteSi.Location = new Point(19, 22);
-            rbActivoClienteSi.Margin = new Padding(3, 4, 3, 4);
+            rbActivoClienteSi.Location = new Point(17, 16);
             rbActivoClienteSi.Name = "rbActivoClienteSi";
-            rbActivoClienteSi.Size = new Size(48, 33);
+            rbActivoClienteSi.Size = new Size(38, 26);
             rbActivoClienteSi.TabIndex = 1;
             rbActivoClienteSi.TabStop = true;
             rbActivoClienteSi.Text = "Si";
@@ -143,10 +130,9 @@
             rbActivoClienteNo.AutoSize = true;
             rbActivoClienteNo.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             rbActivoClienteNo.ForeColor = SystemColors.ButtonFace;
-            rbActivoClienteNo.Location = new Point(133, 22);
-            rbActivoClienteNo.Margin = new Padding(3, 4, 3, 4);
+            rbActivoClienteNo.Location = new Point(116, 16);
             rbActivoClienteNo.Name = "rbActivoClienteNo";
-            rbActivoClienteNo.Size = new Size(55, 33);
+            rbActivoClienteNo.Size = new Size(44, 26);
             rbActivoClienteNo.TabIndex = 21;
             rbActivoClienteNo.Text = "No";
             rbActivoClienteNo.UseVisualStyleBackColor = true;
@@ -157,9 +143,9 @@
             lbEliminar.BackColor = Color.Transparent;
             lbEliminar.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbEliminar.ForeColor = SystemColors.ButtonFace;
-            lbEliminar.Location = new Point(1049, 157);
+            lbEliminar.Location = new Point(918, 118);
             lbEliminar.Name = "lbEliminar";
-            lbEliminar.Size = new Size(61, 29);
+            lbEliminar.Size = new Size(46, 22);
             lbEliminar.TabIndex = 26;
             lbEliminar.Text = "Borrar";
             // 
@@ -169,9 +155,9 @@
             lbGuardar.BackColor = Color.Transparent;
             lbGuardar.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbGuardar.ForeColor = SystemColors.ButtonFace;
-            lbGuardar.Location = new Point(1043, 21);
+            lbGuardar.Location = new Point(913, 16);
             lbGuardar.Name = "lbGuardar";
-            lbGuardar.Size = new Size(72, 29);
+            lbGuardar.Size = new Size(54, 22);
             lbGuardar.TabIndex = 25;
             lbGuardar.Text = "Guardar";
             // 
@@ -182,11 +168,9 @@
             gbSexo.Controls.Add(rbFemenino);
             gbSexo.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             gbSexo.ForeColor = SystemColors.ButtonFace;
-            gbSexo.Location = new Point(744, 21);
-            gbSexo.Margin = new Padding(3, 4, 3, 4);
+            gbSexo.Location = new Point(651, 16);
             gbSexo.Name = "gbSexo";
-            gbSexo.Padding = new Padding(3, 4, 3, 4);
-            gbSexo.Size = new Size(229, 148);
+            gbSexo.Size = new Size(200, 111);
             gbSexo.TabIndex = 22;
             gbSexo.TabStop = false;
             gbSexo.Text = "Sexo";
@@ -197,10 +181,9 @@
             rbOtros.Checked = true;
             rbOtros.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             rbOtros.ForeColor = SystemColors.ButtonFace;
-            rbOtros.Location = new Point(19, 105);
-            rbOtros.Margin = new Padding(3, 4, 3, 4);
+            rbOtros.Location = new Point(17, 79);
             rbOtros.Name = "rbOtros";
-            rbOtros.Size = new Size(75, 33);
+            rbOtros.Size = new Size(60, 26);
             rbOtros.TabIndex = 22;
             rbOtros.TabStop = true;
             rbOtros.Text = "Otros";
@@ -212,10 +195,9 @@
             rbMasculino.AutoSize = true;
             rbMasculino.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             rbMasculino.ForeColor = SystemColors.ButtonFace;
-            rbMasculino.Location = new Point(19, 29);
-            rbMasculino.Margin = new Padding(3, 4, 3, 4);
+            rbMasculino.Location = new Point(17, 22);
             rbMasculino.Name = "rbMasculino";
-            rbMasculino.Size = new Size(106, 33);
+            rbMasculino.Size = new Size(84, 26);
             rbMasculino.TabIndex = 1;
             rbMasculino.Text = "Masculino";
             rbMasculino.UseVisualStyleBackColor = true;
@@ -226,10 +208,9 @@
             rbFemenino.AutoSize = true;
             rbFemenino.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             rbFemenino.ForeColor = SystemColors.ButtonFace;
-            rbFemenino.Location = new Point(19, 65);
-            rbFemenino.Margin = new Padding(3, 4, 3, 4);
+            rbFemenino.Location = new Point(17, 49);
             rbFemenino.Name = "rbFemenino";
-            rbFemenino.Size = new Size(104, 33);
+            rbFemenino.Size = new Size(81, 26);
             rbFemenino.TabIndex = 21;
             rbFemenino.Text = "Femenino";
             rbFemenino.UseVisualStyleBackColor = true;
@@ -242,10 +223,9 @@
             btnBorrar.IconColor = Color.Black;
             btnBorrar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnBorrar.IconSize = 40;
-            btnBorrar.Location = new Point(1033, 189);
-            btnBorrar.Margin = new Padding(3, 4, 3, 4);
+            btnBorrar.Location = new Point(904, 142);
             btnBorrar.Name = "btnBorrar";
-            btnBorrar.Size = new Size(86, 80);
+            btnBorrar.Size = new Size(75, 60);
             btnBorrar.TabIndex = 18;
             btnBorrar.UseVisualStyleBackColor = true;
             btnBorrar.Click += btnEliminar_Click;
@@ -256,18 +236,17 @@
             lbFechaNacimiento.BackColor = Color.Transparent;
             lbFechaNacimiento.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbFechaNacimiento.ForeColor = SystemColors.ButtonFace;
-            lbFechaNacimiento.Location = new Point(418, 142);
+            lbFechaNacimiento.Location = new Point(366, 106);
             lbFechaNacimiento.Name = "lbFechaNacimiento";
-            lbFechaNacimiento.Size = new Size(159, 29);
+            lbFechaNacimiento.Size = new Size(121, 22);
             lbFechaNacimiento.TabIndex = 17;
             lbFechaNacimiento.Text = "Fecha de nacimiento";
             // 
             // fechaNacimiento
             // 
-            fechaNacimiento.Location = new Point(389, 173);
-            fechaNacimiento.Margin = new Padding(3, 4, 3, 4);
+            fechaNacimiento.Location = new Point(340, 130);
             fechaNacimiento.Name = "fechaNacimiento";
-            fechaNacimiento.Size = new Size(209, 27);
+            fechaNacimiento.Size = new Size(183, 23);
             fechaNacimiento.TabIndex = 16;
             fechaNacimiento.ValueChanged += fechaNacimiento_ValueChanged;
             // 
@@ -277,18 +256,17 @@
             lbTelefono.BackColor = Color.Transparent;
             lbTelefono.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbTelefono.ForeColor = SystemColors.ButtonFace;
-            lbTelefono.Location = new Point(459, 72);
+            lbTelefono.Location = new Point(402, 54);
             lbTelefono.Name = "lbTelefono";
-            lbTelefono.Size = new Size(80, 29);
+            lbTelefono.Size = new Size(61, 22);
             lbTelefono.TabIndex = 13;
             lbTelefono.Text = "Telefono ";
             // 
             // tbTelefono
             // 
-            tbTelefono.Location = new Point(389, 105);
-            tbTelefono.Margin = new Padding(3, 4, 3, 4);
+            tbTelefono.Location = new Point(340, 79);
             tbTelefono.Name = "tbTelefono";
-            tbTelefono.Size = new Size(209, 27);
+            tbTelefono.Size = new Size(183, 23);
             tbTelefono.TabIndex = 12;
             tbTelefono.TextChanged += tbTelefono_TextChanged;
             tbTelefono.KeyPress += tbTelefono_KeyPress;
@@ -299,18 +277,17 @@
             lbEmail.BackColor = Color.Transparent;
             lbEmail.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbEmail.ForeColor = SystemColors.ButtonFace;
-            lbEmail.Location = new Point(462, 7);
+            lbEmail.Location = new Point(404, 5);
             lbEmail.Name = "lbEmail";
-            lbEmail.Size = new Size(76, 29);
+            lbEmail.Size = new Size(59, 22);
             lbEmail.TabIndex = 11;
             lbEmail.Text = "Email (*)";
             // 
             // tbEmail
             // 
-            tbEmail.Location = new Point(389, 40);
-            tbEmail.Margin = new Padding(3, 4, 3, 4);
+            tbEmail.Location = new Point(340, 30);
             tbEmail.Name = "tbEmail";
-            tbEmail.Size = new Size(209, 27);
+            tbEmail.Size = new Size(183, 23);
             tbEmail.TabIndex = 10;
             tbEmail.TextChanged += tbEmail_TextChanged;
             // 
@@ -320,18 +297,17 @@
             lbDNI.BackColor = Color.Transparent;
             lbDNI.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbDNI.ForeColor = SystemColors.ButtonFace;
-            lbDNI.Location = new Point(94, 140);
+            lbDNI.Location = new Point(82, 105);
             lbDNI.Name = "lbDNI";
-            lbDNI.Size = new Size(66, 29);
+            lbDNI.Size = new Size(52, 22);
             lbDNI.TabIndex = 7;
             lbDNI.Text = "DNI (*)";
             // 
             // tbDNI
             // 
-            tbDNI.Location = new Point(25, 173);
-            tbDNI.Margin = new Padding(3, 4, 3, 4);
+            tbDNI.Location = new Point(22, 130);
             tbDNI.Name = "tbDNI";
-            tbDNI.Size = new Size(209, 27);
+            tbDNI.Size = new Size(183, 23);
             tbDNI.TabIndex = 6;
             tbDNI.TextChanged += tbDNI_TextChanged;
             tbDNI.KeyPress += tbDNI_KeyPress;
@@ -342,18 +318,17 @@
             lbApellido.BackColor = Color.Transparent;
             lbApellido.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbApellido.ForeColor = SystemColors.ButtonFace;
-            lbApellido.Location = new Point(86, 72);
+            lbApellido.Location = new Point(75, 54);
             lbApellido.Name = "lbApellido";
-            lbApellido.Size = new Size(95, 29);
+            lbApellido.Size = new Size(75, 22);
             lbApellido.TabIndex = 5;
             lbApellido.Text = "Apellido (*)";
             // 
             // tbApellido
             // 
-            tbApellido.Location = new Point(24, 105);
-            tbApellido.Margin = new Padding(3, 4, 3, 4);
+            tbApellido.Location = new Point(21, 79);
             tbApellido.Name = "tbApellido";
-            tbApellido.Size = new Size(209, 27);
+            tbApellido.Size = new Size(183, 23);
             tbApellido.TabIndex = 4;
             tbApellido.TextChanged += tbApellido_TextChanged;
             tbApellido.KeyPress += tbApellido_KeyPress;
@@ -364,9 +339,9 @@
             lbNombre.BackColor = Color.Transparent;
             lbNombre.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lbNombre.ForeColor = SystemColors.ButtonFace;
-            lbNombre.Location = new Point(87, 7);
+            lbNombre.Location = new Point(76, 5);
             lbNombre.Name = "lbNombre";
-            lbNombre.Size = new Size(96, 29);
+            lbNombre.Size = new Size(74, 22);
             lbNombre.TabIndex = 3;
             lbNombre.Text = "Nombre (*)";
             // 
@@ -377,20 +352,18 @@
             btnGuardar.IconColor = Color.Black;
             btnGuardar.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btnGuardar.IconSize = 40;
-            btnGuardar.Location = new Point(1033, 56);
-            btnGuardar.Margin = new Padding(3, 4, 3, 4);
+            btnGuardar.Location = new Point(904, 42);
             btnGuardar.Name = "btnGuardar";
-            btnGuardar.Size = new Size(86, 80);
+            btnGuardar.Size = new Size(75, 60);
             btnGuardar.TabIndex = 2;
             btnGuardar.UseVisualStyleBackColor = true;
             btnGuardar.Click += btnGuardar_Click;
             // 
             // tbNombre
             // 
-            tbNombre.Location = new Point(24, 40);
-            tbNombre.Margin = new Padding(3, 4, 3, 4);
+            tbNombre.Location = new Point(21, 30);
             tbNombre.Name = "tbNombre";
-            tbNombre.Size = new Size(209, 27);
+            tbNombre.Size = new Size(183, 23);
             tbNombre.TabIndex = 1;
             tbNombre.TextChanged += tbNombre_TextChanged;
             tbNombre.KeyPress += tbNombre_KeyPress;
@@ -405,10 +378,9 @@
             panel2.Controls.Add(cbActivos);
             panel2.Controls.Add(dgvClientes);
             panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 291);
-            panel2.Margin = new Padding(3, 4, 3, 4);
+            panel2.Location = new Point(0, 218);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1159, 361);
+            panel2.Size = new Size(1014, 271);
             panel2.TabIndex = 20;
             // 
             // lbBuscadorUsuario
@@ -416,28 +388,30 @@
             lbBuscadorUsuario.AutoSize = true;
             lbBuscadorUsuario.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             lbBuscadorUsuario.ForeColor = SystemColors.ButtonFace;
-            lbBuscadorUsuario.Location = new Point(808, 6);
+            lbBuscadorUsuario.Location = new Point(707, 4);
             lbBuscadorUsuario.Name = "lbBuscadorUsuario";
-            lbBuscadorUsuario.Size = new Size(95, 29);
+            lbBuscadorUsuario.Size = new Size(73, 22);
             lbBuscadorUsuario.TabIndex = 36;
             lbBuscadorUsuario.Text = "Buscar por:";
             // 
             // tbBusquedaNombreCliente
             // 
-            tbBusquedaNombreCliente.Location = new Point(877, 38);
+            tbBusquedaNombreCliente.Location = new Point(767, 28);
+            tbBusquedaNombreCliente.Margin = new Padding(3, 2, 3, 2);
             tbBusquedaNombreCliente.Multiline = true;
             tbBusquedaNombreCliente.Name = "tbBusquedaNombreCliente";
             tbBusquedaNombreCliente.PlaceholderText = "Busqueda por Nombre";
-            tbBusquedaNombreCliente.Size = new Size(209, 27);
+            tbBusquedaNombreCliente.Size = new Size(183, 21);
             tbBusquedaNombreCliente.TabIndex = 35;
             // 
             // tbBusquedaDniCliente
             // 
-            tbBusquedaDniCliente.Location = new Point(619, 38);
+            tbBusquedaDniCliente.Location = new Point(542, 28);
+            tbBusquedaDniCliente.Margin = new Padding(3, 2, 3, 2);
             tbBusquedaDniCliente.Multiline = true;
             tbBusquedaDniCliente.Name = "tbBusquedaDniCliente";
             tbBusquedaDniCliente.PlaceholderText = "Busqueda por DNI";
-            tbBusquedaDniCliente.Size = new Size(209, 27);
+            tbBusquedaDniCliente.Size = new Size(183, 21);
             tbBusquedaDniCliente.TabIndex = 34;
             tbBusquedaDniCliente.TextChanged += tbBusquedaDniCliente_TextChanged;
             // 
@@ -446,26 +420,26 @@
             cbInactivos.AutoSize = true;
             cbInactivos.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             cbInactivos.ForeColor = SystemColors.ButtonFace;
-            cbInactivos.Location = new Point(135, 38);
-            cbInactivos.Margin = new Padding(3, 4, 3, 4);
+            cbInactivos.Location = new Point(118, 28);
             cbInactivos.Name = "cbInactivos";
-            cbInactivos.Size = new Size(99, 33);
+            cbInactivos.Size = new Size(79, 26);
             cbInactivos.TabIndex = 30;
             cbInactivos.Text = "Inactivos";
             cbInactivos.UseVisualStyleBackColor = true;
+            cbInactivos.CheckedChanged += cbInactivos_CheckedChanged;
             // 
             // cbActivos
             // 
             cbActivos.AutoSize = true;
             cbActivos.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             cbActivos.ForeColor = SystemColors.ButtonFace;
-            cbActivos.Location = new Point(25, 38);
-            cbActivos.Margin = new Padding(3, 4, 3, 4);
+            cbActivos.Location = new Point(22, 28);
             cbActivos.Name = "cbActivos";
-            cbActivos.Size = new Size(88, 33);
+            cbActivos.Size = new Size(71, 26);
             cbActivos.TabIndex = 29;
             cbActivos.Text = "Activos";
             cbActivos.UseVisualStyleBackColor = true;
+            cbActivos.CheckedChanged += cbActivos_CheckedChanged;
             // 
             // dgvClientes
             // 
@@ -480,88 +454,22 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dgvClientes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvClientes.Columns.AddRange(new DataGridViewColumn[] { idCliente, nombreCliente, apellidoCliente, dniCliente, telefonoCliente, emailCliente, sexoCliente, fechaNacimientoCliente, activoCliente });
-            dgvClientes.Location = new Point(24, 79);
-            dgvClientes.Margin = new Padding(3, 4, 3, 4);
+            dgvClientes.Location = new Point(21, 59);
             dgvClientes.Name = "dgvClientes";
             dgvClientes.RowHeadersWidth = 51;
-            dgvClientes.Size = new Size(1110, 264);
+            dgvClientes.Size = new Size(971, 198);
             dgvClientes.TabIndex = 0;
             dgvClientes.CellContentClick += dgvClientes_CellContentClick;
             // 
-            // idCliente
-            // 
-            idCliente.HeaderText = "ID Cliente";
-            idCliente.MinimumWidth = 6;
-            idCliente.Name = "idCliente";
-            idCliente.Width = 125;
-            // 
-            // nombreCliente
-            // 
-            nombreCliente.HeaderText = "Nombre";
-            nombreCliente.MinimumWidth = 6;
-            nombreCliente.Name = "nombreCliente";
-            nombreCliente.Width = 125;
-            // 
-            // apellidoCliente
-            // 
-            apellidoCliente.HeaderText = "Apellido";
-            apellidoCliente.MinimumWidth = 6;
-            apellidoCliente.Name = "apellidoCliente";
-            apellidoCliente.Width = 125;
-            // 
-            // dniCliente
-            // 
-            dniCliente.HeaderText = "DNI";
-            dniCliente.MinimumWidth = 6;
-            dniCliente.Name = "dniCliente";
-            dniCliente.Width = 125;
-            // 
-            // telefonoCliente
-            // 
-            telefonoCliente.HeaderText = "Telefono";
-            telefonoCliente.MinimumWidth = 6;
-            telefonoCliente.Name = "telefonoCliente";
-            telefonoCliente.Width = 125;
-            // 
-            // emailCliente
-            // 
-            emailCliente.HeaderText = "Email";
-            emailCliente.MinimumWidth = 6;
-            emailCliente.Name = "emailCliente";
-            emailCliente.Width = 125;
-            // 
-            // sexoCliente
-            // 
-            sexoCliente.HeaderText = "Sexo";
-            sexoCliente.MinimumWidth = 6;
-            sexoCliente.Name = "sexoCliente";
-            sexoCliente.Width = 125;
-            // 
-            // fechaNacimientoCliente
-            // 
-            fechaNacimientoCliente.HeaderText = "Fecha Nacimiento";
-            fechaNacimientoCliente.MinimumWidth = 6;
-            fechaNacimientoCliente.Name = "fechaNacimientoCliente";
-            fechaNacimientoCliente.Width = 125;
-            // 
-            // activoCliente
-            // 
-            activoCliente.HeaderText = "Activo";
-            activoCliente.MinimumWidth = 6;
-            activoCliente.Name = "activoCliente";
-            activoCliente.Width = 125;
-            // 
             // FRegistrarCliente
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateGray;
-            ClientSize = new Size(1159, 652);
+            ClientSize = new Size(1014, 489);
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FRegistrarCliente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registrar Cliente";
@@ -611,14 +519,5 @@
         private GroupBox gbActivoCliente;
         private RadioButton rbActivoClienteSi;
         private RadioButton rbActivoClienteNo;
-        private DataGridViewTextBoxColumn idCliente;
-        private DataGridViewTextBoxColumn nombreCliente;
-        private DataGridViewTextBoxColumn apellidoCliente;
-        private DataGridViewTextBoxColumn dniCliente;
-        private DataGridViewTextBoxColumn telefonoCliente;
-        private DataGridViewTextBoxColumn emailCliente;
-        private DataGridViewTextBoxColumn sexoCliente;
-        private DataGridViewTextBoxColumn fechaNacimientoCliente;
-        private DataGridViewTextBoxColumn activoCliente;
     }
 }
