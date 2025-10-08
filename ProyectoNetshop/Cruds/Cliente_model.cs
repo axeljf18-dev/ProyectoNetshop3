@@ -14,13 +14,13 @@ namespace ProyectoNetshop.Cruds
         public string email { get; set; }
         public string sexo { get; set; }
         public DateTime? fecha_nacimiento { get; set; }
-        public long? telefono { get; set; }
+        public string telefono { get; set; }
         public int dni { get; set; }
         public int activo { get; set; }
         public Cliente_model() { }
 
         public Cliente_model(int p_id_cliente, string p_nombre, string p_apellido, string p_email, string p_sexo, 
-            DateTime p_fecha_nacimiento, long p_telefono, int p_dni, int p_activo)
+            DateTime p_fecha_nacimiento, string p_telefono, int p_dni, int p_activo)
         {
             this.id_cliente = p_id_cliente;
             this.nombre = p_nombre;

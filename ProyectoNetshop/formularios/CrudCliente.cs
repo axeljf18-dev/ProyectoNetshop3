@@ -16,27 +16,21 @@ namespace vistaDeProyectoC
 {
     public partial class FRegistrarCliente : Form
     {
+        // Campo que guarda el ID del usuario seleccionado en la grilla
+        // Inicializado en -1 para indicar que ningun usuario se eligio
+        private int _clienteSeleccionadoId = -1;
         public FRegistrarCliente()
         {
             InitializeComponent();
 
             this.Load += FRegistrarCliente_Load;
-
-            tbTelefono.KeyPress -= tbTelefono_KeyPress;
-            tbDNI.KeyPress -= tbDNI_KeyPress;
-            tbNombre.KeyPress -= tbNombre_KeyPress;
-            tbApellido.KeyPress -= tbApellido_KeyPress;
-
-            tbTelefono.KeyPress += tbTelefono_KeyPress;
-            tbDNI.KeyPress += tbDNI_KeyPress;
-            tbNombre.KeyPress += tbNombre_KeyPress;
-            tbApellido.KeyPress += tbApellido_KeyPress;
-
+  
             tbNombre.TextChanged += InputFields_Changed;
             tbApellido.TextChanged += InputFields_Changed;
             tbDNI.TextChanged += InputFields_Changed;
             tbEmail.TextChanged += InputFields_Changed;
             tbTelefono.TextChanged += InputFields_Changed;
+       
             rbMasculino.CheckedChanged += InputFields_Changed;
             rbFemenino.CheckedChanged += InputFields_Changed;
             rbOtros.CheckedChanged += InputFields_Changed;
@@ -47,7 +41,11 @@ namespace vistaDeProyectoC
             tbBusquedaNombreCliente.KeyPress -= tbBusquedaNombreCliente_KeyPress;
 
             tbBusquedaDniCliente.KeyPress += tbBusquedaDniCliente_KeyPress;
+            tbBusquedaDniCliente.TextChanged += tbBusquedaDniCliente_TextChanged;
             tbBusquedaNombreCliente.KeyPress += tbBusquedaNombreCliente_KeyPress;
+            tbBusquedaNombreCliente.TextChanged += tbBusquedaNombreCliente_TextChanged;
+
+            dgvClientes.CellClick += DgvClientes_CellClick;
         }
 
         private void tbNombre_KeyPress(object sender, KeyPressEventArgs e)
@@ -96,6 +94,8 @@ namespace vistaDeProyectoC
         {
             btnGuardar.Enabled = false;
 
+            cbActivos.Checked = true;
+            cbInactivos.Checked = true;
             // Máximo de dígitos
             tbDNI.MaxLength = 8;
             tbTelefono.MaxLength = 10;
@@ -103,9 +103,11 @@ namespace vistaDeProyectoC
             fechaNacimiento.ShowCheckBox = true;
             fechaNacimiento.Checked = false;
             fechaNacimiento.Value = DateTime.Today;
-
-            // Agregamos una fila de ejemplo:
+            fechaNacimiento.Format = DateTimePickerFormat.Custom;
+            fechaNacimiento.CustomFormat = "dd/MM/yyyy";
+            
             dgvClientes.DataSource = ObtenerClientes();
+            dgvClientes.ClearSelection();
         }
 
         private void InputFields_Changed(object sender, EventArgs e)
@@ -163,76 +165,110 @@ namespace vistaDeProyectoC
             return edad >= 18 && edad <= 100;
         }
 
-        private void tbNombre_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbApellido_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbDNI_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbEmail_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbTelefono_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void fechaNacimiento_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void rbMasculino_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void rbFemenino_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void rbOtros_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            if (!confirmarCampos())
+                return;
+
+            // Se confirmar cual acción de se va a ejecutar (crear o actualizar)
+            string accion = _clienteSeleccionadoId < 0 ? "crear" : "actualizar";
+            var dr = MessageBox.Show($"¿Seguro que deseas {accion} este cliente?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr != DialogResult.Yes)
+                return;
+
+            // Se arma el objeto Cliente_model
             var cliente = new Cliente_model
             {
-                nombre = tbNombre.Text,
-                apellido = tbApellido.Text,
-                email = tbEmail.Text,
+                nombre = tbNombre.Text.Trim(),
+                apellido = tbApellido.Text.Trim(),
+                email = tbEmail.Text.Trim(),
+                activo = rbActivo.Checked ? 1 : 0,
                 sexo = rbMasculino.Checked ? "Masculino" : rbFemenino.Checked ? "Femenino" : "Otros",
                 fecha_nacimiento = fechaNacimiento.Checked ? fechaNacimiento.Value.Date : (DateTime?)null,
-                telefono = string.IsNullOrWhiteSpace(tbTelefono.Text) ? null : long.Parse(tbTelefono.Text),
-                dni = int.Parse(tbDNI.Text)
+                telefono = tbTelefono.Text,
+                dni = int.Parse(tbDNI.Text),
             };
 
-            int resultado = Cliente_controller.agregarCliente(cliente);
-            if (resultado > 0)
-                MessageBox.Show("Cliente registrado con éxito.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Se ejecuta el INSERT o UPDATE
+            int filas;
+            if (_clienteSeleccionadoId < 0)
+                filas = Cliente_controller.agregarCliente(cliente);
             else
-                MessageBox.Show("Error al registrar el cliente.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {
+                cliente.id_cliente = _clienteSeleccionadoId;
+                filas = Cliente_controller.actualizarCliente(cliente);
+            }
+
+            if (filas == 1)
+                MessageBox.Show(_clienteSeleccionadoId < 0 ? "Cliente creado con éxito." : "Cliente actualizado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("Ocurrió un error durante la operación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             FiltrarYRefrescar();
+            vaciarCampos();
+            dgvClientes.ClearSelection();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            // Si no hay selección: limpio los campos
+            if (_clienteSeleccionadoId < 0)
+            {
+                vaciarCampos();
+                return;
+            }
+
+            var dr = MessageBox.Show("¿Seguro que deseas desactivar este cliente?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dr != DialogResult.Yes)
+                return;
+
+            int filas = Cliente_controller.eliminarCliente(_clienteSeleccionadoId);
+
+            if (filas == 1)
+            {
+                MessageBox.Show("Cliente desactivado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("El cliente ya estaba desactivado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             vaciarCampos();
             FiltrarYRefrescar();
+            dgvClientes.ClearSelection();
+        }
+
+        private void DgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var cliente = (Cliente_model)dgvClientes.Rows[e.RowIndex].DataBoundItem;
+            _clienteSeleccionadoId = cliente.id_cliente;
+
+            tbNombre.Text = cliente.nombre;
+            tbApellido.Text = cliente.apellido;
+            tbEmail.Text = cliente.email;
+
+            rbMasculino.Checked = cliente.sexo == "Masculino";
+            rbFemenino.Checked = cliente.sexo == "Femenino";
+            rbOtros.Checked = cliente.sexo == "Otros";
+
+            if (!cliente.fecha_nacimiento.HasValue)
+            {
+                fechaNacimiento.Checked = false;
+
+            } else{
+                fechaNacimiento.Checked = true;
+                fechaNacimiento.Value = (DateTime)cliente.fecha_nacimiento;
+            }
+
+
+            tbTelefono.Text = cliente.telefono?.ToString() ?? string.Empty;
+            tbDNI.Text = cliente.dni.ToString();
+
+            // Habilita “Eliminar” solo si activa == 1
+            btnBorrar.Enabled = cliente.activo == 1;
         }
 
         private void FiltrarYRefrescar()
@@ -271,7 +307,7 @@ namespace vistaDeProyectoC
             while (rd.Read())
             {
                 DateTime? fn = rd.IsDBNull(6) ? (DateTime?)null : rd.GetDateTime(6);
-                long? tel = rd.IsDBNull(7) ? (long?)null : rd.GetInt32(7);
+                string? tel = rd.IsDBNull(7) ? (string?)null : rd.GetString(7);
 
                 var cliente = new Cliente_model
                 {
@@ -303,13 +339,134 @@ namespace vistaDeProyectoC
             rbFemenino.Checked = false;
             rbOtros.Checked = true;
             fechaNacimiento.Value = DateTime.Today;
-
+            fechaNacimiento.Checked = false;          
             btnGuardar.Enabled = false;
         }
 
-        private void tbBusquedaDniCliente_TextChanged(object sender, EventArgs e)
+        private bool confirmarCampos()
         {
+            // Nombre
+            if (string.IsNullOrWhiteSpace(tbNombre.Text))
+            {
+                MessageBox.Show("El nombre es obligatorio.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbNombre.Focus();
+                return false;
+            }
 
+            if (!tbNombre.Text.All(c => char.IsLetter(c) || c == ' '))
+            {
+                MessageBox.Show("El nombre solo puede contener letras", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbNombre.Focus();
+                return false;
+            }
+            // Apellido
+            if (string.IsNullOrWhiteSpace(tbApellido.Text))
+            {
+                MessageBox.Show("El apellido es obligatorio.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbApellido.Focus();
+                return false;
+            }
+
+            if (!tbApellido.Text.All(c => char.IsLetter(c) || c == ' '))
+            {
+                MessageBox.Show("El apellido solo puede contener letras.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbApellido.Focus();
+                return false;
+            }
+
+            // Email
+            string email = tbEmail.Text.Trim();
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                MessageBox.Show(
+                    "El email es obligatorio.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                tbEmail.Focus();
+                return false;
+            }
+
+            // Email Regex
+            var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.com$", RegexOptions.IgnoreCase);
+            if (!emailRegex.IsMatch(email))
+            {
+                MessageBox.Show(
+                    "El email debe tener formato válido y terminar en .com.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                tbEmail.Focus();
+                return false;
+            }
+
+            // Fecha de nacimiento
+            if (fechaNacimiento.Checked)
+            {
+                DateTime fn = fechaNacimiento.Value.Date;
+                DateTime hoy = DateTime.Today;
+                int edad = hoy.Year - fn.Year;
+                if (fn > hoy.AddYears(-edad))
+                    edad--;
+
+                if (edad < 18 || edad > 100)
+                {
+                    MessageBox.Show(
+                        "La edad debe estar entre 18 y 100 años.",
+                        "Validación",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    fechaNacimiento.Focus();
+                    return false;
+                }
+            }
+
+            // DNI
+            if (!int.TryParse(tbDNI.Text, out int dni)
+             || dni < 10_000_000 || dni > 99_999_999)
+            {
+                MessageBox.Show("El DNI debe ser un número entre 10.000.000 y 99.999.999.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbDNI.Focus();
+                return false;
+            }
+
+            // Teléfono
+            string txtTel = tbTelefono.Text.Trim();
+            if (!string.IsNullOrEmpty(txtTel))
+            {
+                if (!long.TryParse(txtTel, out long tel)
+                 || tel < 1_000_000_000L
+                 || tel > 9_999_999_999L)
+                {
+                    MessageBox.Show(
+                        "El teléfono debe ser un número de 10 dígitos válido.",
+                        "Validación",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    tbTelefono.Focus();
+                    return false;
+                }
+            }
+
+            // Extraer valores para la comprobación
+            int dniR = int.Parse(tbDNI.Text);
+            string emailR = tbEmail.Text.Trim();
+            int idActR = _clienteSeleccionadoId < 0 ? 0 : _clienteSeleccionadoId;
+
+            //  Última validación: DNI o email duplicados
+            if (Cliente_controller.ExisteEmailODni(dniR, emailR, idActR))
+            {
+                MessageBox.Show("El DNI o el email ya están registrados en otro usuario.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbDNI.Focus();
+                return false;
+            }
+
+            return true;
         }
 
         private void tbBusquedaDniCliente_KeyPress(object sender, KeyPressEventArgs e)
@@ -321,6 +478,16 @@ namespace vistaDeProyectoC
             }
         }
 
+        private void tbBusquedaDniCliente_TextChanged(object sender, EventArgs e)
+        {
+            FiltrarYRefrescar();
+        }
+
+        private void tbBusquedaNombreCliente_TextChanged(object sender, EventArgs e)
+        {
+            FiltrarYRefrescar();
+        }
+
         private void tbBusquedaNombreCliente_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar)
@@ -330,16 +497,6 @@ namespace vistaDeProyectoC
                 e.Handled = true;
                 MessageBox.Show("Sólo se permiten letras.", "Carácter no permitido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void dgvClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void cbActivos_CheckedChanged(object sender, EventArgs e)

@@ -460,22 +460,6 @@ namespace ProyectoNetshop.formularios
             LimpiarControles();
         }
 
-
-        private void lbEmail_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void fechaNacimiento_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cbActivosUsuarios_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Filtro_CheckedChanged(object sender, EventArgs e)
         {
             if (!cbActivosUsuarios.Checked && !cbInactivosUsuarios.Checked)
@@ -486,16 +470,6 @@ namespace ProyectoNetshop.formularios
             }
 
             FiltrarYRefrescar();
-        }
-
-        private void tbBusquedaDniUsuario_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbNombreUsuario_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private bool ValidarCampos()
@@ -667,29 +641,9 @@ namespace ProyectoNetshop.formularios
                 e.Handled = true;
         }
 
-        private void tbBusquedaNombreUsuario_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void cbOcultalContraseniaUser_CheckedChanged(object sender, EventArgs e)
         {
             tbContraseniaUsuario.UseSystemPasswordChar = !cbOcultalContraseniaUser.Checked;
-        }
-
-        private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void tbTelefonoUsuario_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

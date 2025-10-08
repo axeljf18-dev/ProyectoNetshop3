@@ -19,7 +19,7 @@ namespace ProyectoNetshop.Cruds
             cmd.Parameters.Add("@email", SqlDbType.VarChar, 200).Value = p_cliente.email;
             cmd.Parameters.Add("@sexo", SqlDbType.VarChar, 20).Value = p_cliente.sexo;
             cmd.Parameters.Add("@fecha_nacimiento", SqlDbType.Date).Value = p_cliente.fecha_nacimiento.HasValue ? (object)p_cliente.fecha_nacimiento.Value.Date : DBNull.Value;
-            cmd.Parameters.Add("@telefono", SqlDbType.BigInt).Value = p_cliente.telefono.HasValue ? (object)p_cliente.telefono.Value : DBNull.Value;
+            cmd.Parameters.Add("@telefono", SqlDbType.VarChar, 20).Value = string.IsNullOrWhiteSpace(p_cliente.telefono) ? DBNull.Value : p_cliente.telefono;
             cmd.Parameters.Add("@dni", SqlDbType.Int).Value = p_cliente.dni;
             cmd.Parameters.Add("@activo", SqlDbType.Int).Value = p_cliente.activo;
             return cmd.ExecuteNonQuery();
@@ -39,7 +39,7 @@ namespace ProyectoNetshop.Cruds
             cmd.Parameters.Add("@email", SqlDbType.VarChar, 200).Value = p_cliente.email;
             cmd.Parameters.Add("@sexo", SqlDbType.VarChar, 20).Value = p_cliente.sexo;
             cmd.Parameters.Add("@fecha_nacimiento", SqlDbType.Date).Value = p_cliente.fecha_nacimiento.HasValue ? (object)p_cliente.fecha_nacimiento.Value.Date : DBNull.Value;
-            cmd.Parameters.Add("@telefono", SqlDbType.BigInt).Value = p_cliente.telefono.HasValue ? (object)p_cliente.telefono.Value : DBNull.Value;
+            cmd.Parameters.Add("@telefono", SqlDbType.VarChar, 20).Value = string.IsNullOrWhiteSpace(p_cliente.telefono) ? DBNull.Value : p_cliente.telefono;
             cmd.Parameters.Add("@dni", SqlDbType.Int).Value = p_cliente.dni;
             cmd.Parameters.Add("@id_cliente", SqlDbType.Int).Value = p_cliente.id_cliente;
             cmd.Parameters.Add("@activo", SqlDbType.Int).Value = p_cliente.activo;
@@ -54,6 +54,19 @@ namespace ProyectoNetshop.Cruds
             cmd.Parameters.Add("@idCliente", SqlDbType.Int).Value = idCliente;
 
             return cmd.ExecuteNonQuery();
+        }
+
+        public static bool ExisteEmailODni(int dni, string email, int idCliente = 0)
+        {
+            using var conexion = BD.BaseDeDatos.obtenerConexion();
+            using var cmd = conexion.CreateCommand();
+            cmd.CommandText = @"SELECT COUNT(*) FROM cliente WHERE (dni = @dni OR email = @email) AND (@idCliente = 0 OR id_cliente <> @idCliente);";
+            cmd.Parameters.Add("@dni", SqlDbType.Int).Value = dni;
+            cmd.Parameters.Add("@email", SqlDbType.VarChar, 200).Value = email;
+            cmd.Parameters.Add("@idCliente", SqlDbType.Int).Value = idCliente;
+
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count > 0;
         }
     }
 }

@@ -106,7 +106,6 @@
             panel1.RightToLeft = RightToLeft.No;
             panel1.Size = new Size(1159, 652);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
             // cbOcultalContraseniaUser
             // 
@@ -319,7 +318,6 @@
             fechaNacimientoUsuario.Size = new Size(209, 27);
             fechaNacimientoUsuario.TabIndex = 16;
             fechaNacimientoUsuario.Value = new DateTime(2025, 9, 20, 0, 8, 37, 0);
-            fechaNacimientoUsuario.ValueChanged += fechaNacimiento_ValueChanged;
             // 
             // lbEmailUsuario
             // 
@@ -332,7 +330,6 @@
             lbEmailUsuario.Size = new Size(76, 29);
             lbEmailUsuario.TabIndex = 11;
             lbEmailUsuario.Text = "Email (*)";
-            lbEmailUsuario.Click += lbEmail_Click;
             // 
             // tbEmailUsuario
             // 
@@ -381,7 +378,6 @@
             tbTelefonoUsuario.Name = "tbTelefonoUsuario";
             tbTelefonoUsuario.Size = new Size(209, 27);
             tbTelefonoUsuario.TabIndex = 6;
-            tbTelefonoUsuario.TextChanged += tbTelefonoUsuario_TextChanged;
             // 
             // lbApellidoUsuario
             // 
@@ -438,7 +434,6 @@
             tbNombreUsuario.Name = "tbNombreUsuario";
             tbNombreUsuario.Size = new Size(209, 27);
             tbNombreUsuario.TabIndex = 1;
-            tbNombreUsuario.TextChanged += tbNombreUsuario_TextChanged;
             tbNombreUsuario.KeyPress += tbNombre_KeyPress;
             // 
             // panel2
@@ -476,7 +471,6 @@
             tbBusquedaNombreUsuario.PlaceholderText = "Busqueda por Nombre";
             tbBusquedaNombreUsuario.Size = new Size(209, 27);
             tbBusquedaNombreUsuario.TabIndex = 32;
-            tbBusquedaNombreUsuario.TextChanged += tbBusquedaNombreUsuario_TextChanged;
             // 
             // tbBusquedaDniUsuario
             // 
@@ -486,7 +480,6 @@
             tbBusquedaDniUsuario.PlaceholderText = "Busqueda por DNI";
             tbBusquedaDniUsuario.Size = new Size(209, 27);
             tbBusquedaDniUsuario.TabIndex = 31;
-            tbBusquedaDniUsuario.TextChanged += tbBusquedaDniUsuario_TextChanged;
             // 
             // cbInactivosUsuarios
             // 
@@ -513,7 +506,6 @@
             cbActivosUsuarios.TabIndex = 29;
             cbActivosUsuarios.Text = "Activos";
             cbActivosUsuarios.UseVisualStyleBackColor = true;
-            cbActivosUsuarios.CheckedChanged += cbActivosUsuarios_CheckedChanged;
             // 
             // dgvUsuarios
             // 
@@ -540,7 +532,6 @@
             dgvUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUsuarios.Size = new Size(1112, 235);
             dgvUsuarios.TabIndex = 0;
-            dgvUsuarios.CellContentClick += dgvUsuarios_CellContentClick;
             // 
             // sqlCommand1
             // 

@@ -31,8 +31,8 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             panel1 = new Panel();
             gbActivoCliente = new GroupBox();
-            rbActivoClienteSi = new RadioButton();
-            rbActivoClienteNo = new RadioButton();
+            rbActivo = new RadioButton();
+            rbInactivo = new RadioButton();
             lbEliminar = new Label();
             lbGuardar = new Label();
             gbSexo = new GroupBox();
@@ -94,13 +94,12 @@
             panel1.RightToLeft = RightToLeft.No;
             panel1.Size = new Size(1014, 219);
             panel1.TabIndex = 19;
-            panel1.Paint += panel1_Paint;
             // 
             // gbActivoCliente
             // 
             gbActivoCliente.BackColor = Color.Transparent;
-            gbActivoCliente.Controls.Add(rbActivoClienteSi);
-            gbActivoCliente.Controls.Add(rbActivoClienteNo);
+            gbActivoCliente.Controls.Add(rbActivo);
+            gbActivoCliente.Controls.Add(rbInactivo);
             gbActivoCliente.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
             gbActivoCliente.ForeColor = SystemColors.ButtonFace;
             gbActivoCliente.Location = new Point(651, 142);
@@ -111,31 +110,31 @@
             gbActivoCliente.Text = "Activo";
             gbActivoCliente.Visible = false;
             // 
-            // rbActivoClienteSi
+            // rbActivo
             // 
-            rbActivoClienteSi.AutoSize = true;
-            rbActivoClienteSi.Checked = true;
-            rbActivoClienteSi.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
-            rbActivoClienteSi.ForeColor = SystemColors.ButtonFace;
-            rbActivoClienteSi.Location = new Point(17, 16);
-            rbActivoClienteSi.Name = "rbActivoClienteSi";
-            rbActivoClienteSi.Size = new Size(38, 26);
-            rbActivoClienteSi.TabIndex = 1;
-            rbActivoClienteSi.TabStop = true;
-            rbActivoClienteSi.Text = "Si";
-            rbActivoClienteSi.UseVisualStyleBackColor = true;
+            rbActivo.AutoSize = true;
+            rbActivo.Checked = true;
+            rbActivo.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
+            rbActivo.ForeColor = SystemColors.ButtonFace;
+            rbActivo.Location = new Point(17, 16);
+            rbActivo.Name = "rbActivo";
+            rbActivo.Size = new Size(38, 26);
+            rbActivo.TabIndex = 1;
+            rbActivo.TabStop = true;
+            rbActivo.Text = "Si";
+            rbActivo.UseVisualStyleBackColor = true;
             // 
-            // rbActivoClienteNo
+            // rbInactivo
             // 
-            rbActivoClienteNo.AutoSize = true;
-            rbActivoClienteNo.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
-            rbActivoClienteNo.ForeColor = SystemColors.ButtonFace;
-            rbActivoClienteNo.Location = new Point(116, 16);
-            rbActivoClienteNo.Name = "rbActivoClienteNo";
-            rbActivoClienteNo.Size = new Size(44, 26);
-            rbActivoClienteNo.TabIndex = 21;
-            rbActivoClienteNo.Text = "No";
-            rbActivoClienteNo.UseVisualStyleBackColor = true;
+            rbInactivo.AutoSize = true;
+            rbInactivo.Font = new Font("Dubai", 9.749999F, FontStyle.Bold | FontStyle.Italic);
+            rbInactivo.ForeColor = SystemColors.ButtonFace;
+            rbInactivo.Location = new Point(116, 16);
+            rbInactivo.Name = "rbInactivo";
+            rbInactivo.Size = new Size(44, 26);
+            rbInactivo.TabIndex = 21;
+            rbInactivo.Text = "No";
+            rbInactivo.UseVisualStyleBackColor = true;
             // 
             // lbEliminar
             // 
@@ -188,7 +187,6 @@
             rbOtros.TabStop = true;
             rbOtros.Text = "Otros";
             rbOtros.UseVisualStyleBackColor = true;
-            rbOtros.CheckedChanged += rbOtros_CheckedChanged;
             // 
             // rbMasculino
             // 
@@ -201,7 +199,6 @@
             rbMasculino.TabIndex = 1;
             rbMasculino.Text = "Masculino";
             rbMasculino.UseVisualStyleBackColor = true;
-            rbMasculino.CheckedChanged += rbMasculino_CheckedChanged;
             // 
             // rbFemenino
             // 
@@ -214,7 +211,6 @@
             rbFemenino.TabIndex = 21;
             rbFemenino.Text = "Femenino";
             rbFemenino.UseVisualStyleBackColor = true;
-            rbFemenino.CheckedChanged += rbFemenino_CheckedChanged;
             // 
             // btnBorrar
             // 
@@ -244,11 +240,11 @@
             // 
             // fechaNacimiento
             // 
+            fechaNacimiento.CustomFormat = "";
             fechaNacimiento.Location = new Point(340, 130);
             fechaNacimiento.Name = "fechaNacimiento";
             fechaNacimiento.Size = new Size(183, 23);
             fechaNacimiento.TabIndex = 16;
-            fechaNacimiento.ValueChanged += fechaNacimiento_ValueChanged;
             // 
             // lbTelefono
             // 
@@ -268,7 +264,6 @@
             tbTelefono.Name = "tbTelefono";
             tbTelefono.Size = new Size(183, 23);
             tbTelefono.TabIndex = 12;
-            tbTelefono.TextChanged += tbTelefono_TextChanged;
             tbTelefono.KeyPress += tbTelefono_KeyPress;
             // 
             // lbEmail
@@ -289,7 +284,6 @@
             tbEmail.Name = "tbEmail";
             tbEmail.Size = new Size(183, 23);
             tbEmail.TabIndex = 10;
-            tbEmail.TextChanged += tbEmail_TextChanged;
             // 
             // lbDNI
             // 
@@ -309,7 +303,6 @@
             tbDNI.Name = "tbDNI";
             tbDNI.Size = new Size(183, 23);
             tbDNI.TabIndex = 6;
-            tbDNI.TextChanged += tbDNI_TextChanged;
             tbDNI.KeyPress += tbDNI_KeyPress;
             // 
             // lbApellido
@@ -330,7 +323,6 @@
             tbApellido.Name = "tbApellido";
             tbApellido.Size = new Size(183, 23);
             tbApellido.TabIndex = 4;
-            tbApellido.TextChanged += tbApellido_TextChanged;
             tbApellido.KeyPress += tbApellido_KeyPress;
             // 
             // lbNombre
@@ -365,7 +357,6 @@
             tbNombre.Name = "tbNombre";
             tbNombre.Size = new Size(183, 23);
             tbNombre.TabIndex = 1;
-            tbNombre.TextChanged += tbNombre_TextChanged;
             tbNombre.KeyPress += tbNombre_KeyPress;
             // 
             // panel2
@@ -413,7 +404,6 @@
             tbBusquedaDniCliente.PlaceholderText = "Busqueda por DNI";
             tbBusquedaDniCliente.Size = new Size(183, 21);
             tbBusquedaDniCliente.TabIndex = 34;
-            tbBusquedaDniCliente.TextChanged += tbBusquedaDniCliente_TextChanged;
             // 
             // cbInactivos
             // 
@@ -456,10 +446,10 @@
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvClientes.Location = new Point(21, 59);
             dgvClientes.Name = "dgvClientes";
+            dgvClientes.ReadOnly = true;
             dgvClientes.RowHeadersWidth = 51;
             dgvClientes.Size = new Size(971, 198);
             dgvClientes.TabIndex = 0;
-            dgvClientes.CellContentClick += dgvClientes_CellContentClick;
             // 
             // FRegistrarCliente
             // 
@@ -517,7 +507,7 @@
         private TextBox tbBusquedaNombreCliente;
         private TextBox tbBusquedaDniCliente;
         private GroupBox gbActivoCliente;
-        private RadioButton rbActivoClienteSi;
-        private RadioButton rbActivoClienteNo;
+        private RadioButton rbActivo;
+        private RadioButton rbInactivo;
     }
 }
